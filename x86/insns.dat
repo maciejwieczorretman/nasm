@@ -232,7 +232,8 @@ $wdq  MOVSXB	reg#,rm8			[rm:	o# 0f be /r]				386,ND
 $wdq  MOVSX	reg#,rm16			[rm:	o# 0f bf /r]				386,SX
 $wdq  MOVSXW	reg#,rm16			[rm:	o# 0f bf /r]				386,ND
 $wdq  MOVSX	reg#,rm32			[rm:	o# 63 /r]				X86_64,SX,LONG,ND
-$wdq  MOVSXD	reg#,rm32			[rm:	o# 63 /r]				X86_64,LONG
+      MOVSXD	reg16,rm16			[rm:	o16 63 /r]				X86_64,LONG
+$dq   MOVSXD	reg#,rm32			[rm:	o# 63 /r]				X86_64,LONG
 
 $wdq  MOVZX	reg#,rm8			[rm:	o# 0f b6 /r]				386,SX
 $wdq  MOVZXB	reg#,rm8			[rm:	o# 0f b6 /r]				386,ND
@@ -544,7 +545,7 @@ $dq   RDGSBASE	reg#				[m:	w# f3 0f ae /1]				LONG
 $dq   WRFSBASE	reg#				[m:	w# f3 0f ae /2]				LONG
 $dq   WRGSBASE	reg#				[m:	w# f3 0f ae /3]				LONG
 
-$wd   ARPL	rm16,reg#			[mr:	optw# 63 /r]				286,PROT,SM,NOLONG
+$wd   ARPL	rm16,reg#			[mr:	optw# 63 /r]				286,PROT,NOLONG
 $wdq  LAR	reg#,rm_sel			[rm:	optd# 0f 02 /r]				286,PROT
 $wdq  LSL	reg#,rm_sel			[rm:	optd# 0f 03 /r]				286,PROT
 
@@ -928,6 +929,7 @@ POP2P		reg64:reg64			[mv:	o64nw evex.nd1.l0.np.m4.w1	  8f /0	]	APX,ND
 
 PXOR		mmxreg,mmxrm			[rm:	np 0f ef /r]				PENT,MMX,SQ
 SKINIT		void				[	0f 01 de]				X86_64,LONG
+SKINIT		reg_eax				[	0f 01 de]				X86_64,LONG
 
 ;# Permanently undefined instructions
 ; UD0, UD1: officially DO take a modrm
