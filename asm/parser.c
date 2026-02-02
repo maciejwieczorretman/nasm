@@ -1255,6 +1255,7 @@ restart_parse:
 
             if (!(eclass & ~(EC_RELOC | EC_UNKNOWN))) {
                 /* It is an immediate */
+		bool size_was_specified = false;
                 op->offset    = reloc_value(value);
                 op->segment   = reloc_seg(value);
                 op->wrt       = reloc_wrt(value);
@@ -1267,6 +1268,12 @@ restart_parse:
 
                 op->type |= IMM_NORMAL;
                 set_imm_flags(op, result->opt);
+
+		for(int i = 0 ; i <= opnum ; i++)
+		    size_was_specified |= !!(result->oprs[i].xsize & SIZE_MASK);
+
+		if (!size_was_specified)
+		    nasm_warn(WARN_OTHER, "size wasn't specified, some data may be omitted");
 
                 /*
                  * Special hack: if the previous operand was a colon
